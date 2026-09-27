@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Advertisement Analysis - AI Meta Ads</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+
+    <style>
+
+        .analysis-page {
+            min-height: calc(100vh - 75px);
+            padding: 50px 8%;
+            background: #f7f8fc;
+        }
+
+        .analysis-container {
+            max-width: 1200px;
+            margin: auto;
+        }
+
+        .analysis-header {
+            text-align: center;
+            margin-bottom: 35px;
+        }
+
+        .analysis-header h1 {
+            font-size: 42px;
+            color: #111827;
+            margin-bottom: 10px;
+        }
+
+        .analysis-header p {
+            color: #666;
+            font-size: 17px;
+        }
+
+        .analysis-badge {
+            display: inline-block;
+            padding: 8px 16px;
+            margin-bottom: 15px;
+            border-radius: 20px;
+            background: #111827;
+            color: white;
+            font-size: 13px;
+            font-weight: bold;
+        }
+
+        .analysis-main {
+            display: grid;
+            grid-template-columns: 1fr 1.3fr;
+            gap: 30px;
+            align-items: start;
+        }
+
+        .image-card,
+        .results-card {
+            background: white;
+            padding: 30px;
+            border-radius: 18px;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.07);
+        }
+
+        .image-card h2,
+        .results-card h2 {
+            color: #111827;
+            margin-bottom: 20px;
+        }
+
+        .advertisement-image {
+            width: 100%;
+            max-height: 600px;
+            object-fit: contain;
+            border-radius: 12px;
+            border: 1px solid #eeeeee;
+        }
+
+        .result-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 18px;
+        }
+
+        .result-item {
+            background: #f7f8fc;
+            padding: 20px;
+            border-radius: 12px;
+        }
+
+        .result-item h3 {
+            font-size: 15px;
+            color: #666;
+            margin-bottom: 10px;
+        }
+
+        .result-item p {
+            font-size: 18px;
+            font-weight: bold;
+            color: #111827;
+            line-height: 1.5;
+        }
+
+        .ocr-section {
+            margin-top: 25px;
+            padding: 22px;
+            background: #fafafa;
+            border: 1px solid #eeeeee;
+            border-radius: 12px;
+        }
+
+        .ocr-section h3 {
+            color: #111827;
+            margin-bottom: 12px;
+        }
+
+        .ocr-text {
+            color: #555;
+            line-height: 1.8;
+            white-space: pre-line;
+        }
+
+        .action-buttons {
+            text-align: center;
+            margin-top: 30px;
+        }
+
+        .action-buttons a {
+            display: inline-block;
+            padding: 14px 24px;
+            margin: 5px;
+            border-radius: 8px;
+            background: #111827;
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .action-buttons a:hover {
+            background: #000000;
+        }
+
+        @media (max-width: 850px) {
+
+            .analysis-main {
+                grid-template-columns: 1fr;
+            }
+
+            .result-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .analysis-header h1 {
+                font-size: 32px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- NAVBAR -->
+
+<nav class="navbar">
+
+    <div class="logo">
+        🚀 AI Meta Ads
+    </div>
+
+    <div class="nav-links">
+
+        <a href="/dashboard">
+            Dashboard
+        </a>
+
+        <a href="/upload">
+            Upload Ad
+        </a>
+
+        <a href="/logout">
+            Logout
+        </a>
+
+    </div>
+
+</nav>
+
+
+
+<!-- ANALYSIS PAGE -->
+
+<section class="analysis-page">
+
+    <div class="analysis-container">
+
+
+        <!-- HEADER -->
+
+        <div class="analysis-header">
+
+            <span class="analysis-badge">
+                AI ANALYSIS COMPLETE
+            </span>
+
+            <h1>
+                Advertisement Intelligence 🔍
+            </h1>
+
+            <p>
+                AI-powered understanding of your uploaded advertisement.
+            </p>
+
+        </div>
+
+
+
+        <!-- MAIN -->
+
+        <div class="analysis-main">
+
+
+            <!-- IMAGE -->
+
+            <div class="image-card">
+
+                <h2>
+                    📷 Uploaded Advertisement
+                </h2>
+
+                <img
+                    class="advertisement-image"
+                    src="{{ url_for('static', filename='uploads/' + filename) }}"
+                    alt="Uploaded Advertisement">
+
+            </div>
+
+
+
+            <!-- RESULTS -->
+
+            <div class="results-card">
+
+                <h2>
+                    🤖 AI Understanding
+                </h2>
+
+
+                <div class="result-grid">
+
+
+                    <!-- CATEGORY -->
+
+                    <div class="result-item">
+
+                        <h3>
+                            📌 Ad Category
+                        </h3>
+
+                        <p>
+                            {{ analysis.category }}
+                        </p>
+
+                    </div>
+
+
+
+                    <!-- PRODUCT -->
+
+                    <div class="result-item">
+
+                        <h3>
+                            🛍️ Product
+                        </h3>
+
+                        <p>
+                            {{ analysis.product }}
+                        </p>
+
+                    </div>
+
+
+
+                    <!-- CREATIVE TYPE -->
+
+                    <div class="result-item">
+
+                        <h3>
+                            🎨 Creative Type
+                        </h3>
+
+                        <p>
+                            {{ analysis.creative_type }}
+                        </p>
+
+                    </div>
+
+
+
+                    <!-- OFFER -->
+
+                    <div class="result-item">
+
+                        <h3>
+                            💰 Offer
+                        </h3>
+
+                        <p>
+                            {{ analysis.offer }}
+                        </p>
+
+                    </div>
+
+
+
+                    <!-- TARGET AUDIENCE -->
+
+                    <div class="result-item">
+
+                        <h3>
+                            🎯 Target Audience
+                        </h3>
+
+                        <p>
+                            {{ analysis.audience }}
+                        </p>
+
+                    </div>
+
+
+                </div>
+
+
+
+                <!-- OCR TEXT -->
+
+                <div class="ocr-section">
+
+                    <h3>
+                        📝 Extracted Advertisement Text
+                    </h3>
+
+
+                    {% if analysis.text %}
+
+                        <p class="ocr-text">
+                            {{ analysis.text }}
+                        </p>
+
+                    {% else %}
+
+                        <p class="ocr-text">
+                            No readable text detected.
+                        </p>
+
+                    {% endif %}
+
+                </div>
+
+
+            </div>
+
+        </div>
+
+
+
+        <!-- BUTTONS -->
+
+        <div class="action-buttons">
+
+            <a href="/upload">
+                📤 Upload Another Advertisement
+            </a>
+
+            <a href="/dashboard">
+                📊 Back to Dashboard
+            </a>
+
+        </div>
+
+
+    </div>
+
+</section>
+
+
+</body>
+
+</html>

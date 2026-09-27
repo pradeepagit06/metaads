@@ -1,0 +1,812 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>
+        Trend & Regional Intelligence
+    </title>
+
+    <link
+        rel="stylesheet"
+        href="{{ url_for(
+            'static',
+            filename='css/style.css'
+        ) }}"
+    >
+
+    <style>
+
+        .intel-container {
+
+            width: 90%;
+
+            max-width: 1150px;
+
+            margin: 40px auto;
+
+        }
+
+
+        .page-header {
+
+            text-align: center;
+
+            margin-bottom: 35px;
+
+        }
+
+
+        .page-header h1 {
+
+            font-size: 34px;
+
+            margin-bottom: 10px;
+
+        }
+
+
+        .page-header p {
+
+            color: #666;
+
+        }
+
+
+        .profile-card,
+        .intel-card {
+
+            background: white;
+
+            padding: 25px;
+
+            border-radius: 16px;
+
+            box-shadow:
+                0 5px 20px
+                rgba(0,0,0,0.08);
+
+            margin-bottom: 25px;
+
+        }
+
+
+        .profile-grid {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(
+                    auto-fit,
+                    minmax(200px, 1fr)
+                );
+
+            gap: 15px;
+
+            margin-top: 20px;
+
+        }
+
+
+        .profile-item {
+
+            background: #f7f7f7;
+
+            padding: 15px;
+
+            border-radius: 10px;
+
+        }
+
+
+        .profile-item strong {
+
+            display: block;
+
+            margin-bottom: 7px;
+
+        }
+
+
+        .highlight-grid {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(
+                    auto-fit,
+                    minmax(220px, 1fr)
+                );
+
+            gap: 20px;
+
+            margin-top: 20px;
+
+        }
+
+
+        .highlight-box {
+
+            padding: 25px;
+
+            background: #f8f9ff;
+
+            border-radius: 14px;
+
+            text-align: center;
+
+        }
+
+
+        .highlight-icon {
+
+            font-size: 35px;
+
+        }
+
+
+        .highlight-value {
+
+            font-size: 21px;
+
+            font-weight: bold;
+
+            margin-top: 10px;
+
+        }
+
+
+        .table-container {
+
+            overflow-x: auto;
+
+            margin-top: 20px;
+
+        }
+
+
+        table {
+
+            width: 100%;
+
+            border-collapse: collapse;
+
+        }
+
+
+        th,
+        td {
+
+            padding: 13px;
+
+            text-align: left;
+
+            border-bottom: 1px solid #eee;
+
+        }
+
+
+        th {
+
+            background: #f8fafc;
+
+        }
+
+
+        .badge {
+
+            display: inline-block;
+
+            padding: 6px 11px;
+
+            border-radius: 20px;
+
+            background: #eef2ff;
+
+            font-size: 13px;
+
+            font-weight: bold;
+
+        }
+
+
+        .button {
+
+            display: inline-block;
+
+            margin-top: 20px;
+
+            margin-right: 10px;
+
+            padding: 12px 20px;
+
+            border-radius: 8px;
+
+            text-decoration: none;
+
+            background: #111827;
+
+            color: white;
+
+        }
+
+
+        .button.primary {
+
+            background: #4338ca;
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<nav class="navbar">
+
+    <div class="logo">
+
+        🚀 AI Meta Ads
+
+    </div>
+
+
+    <div class="nav-links">
+
+        <a href="/dashboard">
+
+            Dashboard
+
+        </a>
+
+
+        <a href="/logout">
+
+            Logout
+
+        </a>
+
+    </div>
+
+</nav>
+
+
+
+<div class="intel-container">
+
+
+    <!-- HEADER -->
+
+    <div class="page-header">
+
+        <h1>
+
+            📈 Trend & 🌍 Regional Intelligence
+
+        </h1>
+
+
+        <p>
+
+            Historical engagement trends and
+            regional audience intelligence.
+
+        </p>
+
+    </div>
+
+
+
+    <!-- AD PROFILE -->
+
+    <div class="profile-card">
+
+        <h2>
+
+            📝 Advertisement Profile
+
+        </h2>
+
+
+        <div class="profile-grid">
+
+
+            <div class="profile-item">
+
+                <strong>
+
+                    Category
+
+                </strong>
+
+                {{ analysis.category }}
+
+            </div>
+
+
+            <div class="profile-item">
+
+                <strong>
+
+                    Product
+
+                </strong>
+
+                {{ analysis.product }}
+
+            </div>
+
+
+            <div class="profile-item">
+
+                <strong>
+
+                    Creative Type
+
+                </strong>
+
+                {{ analysis.creative_type }}
+
+            </div>
+
+
+            <div class="profile-item">
+
+                <strong>
+
+                    Offer
+
+                </strong>
+
+                {{ analysis.offer }}
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- REGIONAL HIGHLIGHTS -->
+
+    <div class="intel-card">
+
+        <h2>
+
+            🌍 Regional Highlights
+
+        </h2>
+
+
+        <div class="highlight-grid">
+
+
+            <div class="highlight-box">
+
+                <div class="highlight-icon">
+
+                    🌎
+
+                </div>
+
+
+                <h3>
+
+                    Top Country
+
+                </h3>
+
+
+                <div class="highlight-value">
+
+                    {{ intelligence.top_country }}
+
+                </div>
+
+            </div>
+
+
+            <div class="highlight-box">
+
+                <div class="highlight-icon">
+
+                    📍
+
+                </div>
+
+
+                <h3>
+
+                    Top Location
+
+                </h3>
+
+
+                <div class="highlight-value">
+
+                    {{ intelligence.top_location }}
+
+                </div>
+
+            </div>
+
+
+            <div class="highlight-box">
+
+                <div class="highlight-icon">
+
+                    📊
+
+                </div>
+
+
+                <h3>
+
+                    Events Analyzed
+
+                </h3>
+
+
+                <div class="highlight-value">
+
+                    {{ intelligence.events_analyzed }}
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- DAY TREND -->
+
+    <div class="intel-card">
+
+        <h2>
+
+            📈 Day-wise Engagement Trend
+
+        </h2>
+
+
+        <p>
+
+            Historical event activity by day
+            for similar advertisements.
+
+        </p>
+
+
+        <div class="table-container">
+
+            <table>
+
+                <thead>
+
+                    <tr>
+
+                        <th>
+                            Day
+                        </th>
+
+                        <th>
+                            Total Events
+                        </th>
+
+                        <th>
+                            Engagement Events
+                        </th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody>
+
+                    {% for item
+                       in intelligence.trend %}
+
+                    <tr>
+
+                        <td>
+
+                            <span class="badge">
+
+                                {{ item.day_of_week }}
+
+                            </span>
+
+                        </td>
+
+
+                        <td>
+
+                            {{ item.events }}
+
+                        </td>
+
+
+                        <td>
+
+                            {{ item.engagement }}
+
+                        </td>
+
+                    </tr>
+
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- TIME TREND -->
+
+    <div class="intel-card">
+
+        <h2>
+
+            ⏰ Time-of-day Trend
+
+        </h2>
+
+
+        <p>
+
+            Historical event distribution
+            across different time periods.
+
+        </p>
+
+
+        <div class="table-container">
+
+            <table>
+
+                <thead>
+
+                    <tr>
+
+                        <th>
+                            Time
+                        </th>
+
+                        <th>
+                            Events
+                        </th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody>
+
+                    {% for item
+                       in intelligence.time_trend %}
+
+                    <tr>
+
+                        <td>
+
+                            <span class="badge">
+
+                                {{ item.time_of_day }}
+
+                            </span>
+
+                        </td>
+
+
+                        <td>
+
+                            {{ item.events }}
+
+                        </td>
+
+                    </tr>
+
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- COUNTRY ANALYSIS -->
+
+    <div class="intel-card">
+
+        <h2>
+
+            🌍 Regional Engagement
+
+        </h2>
+
+
+        <p>
+
+            Countries with historical activity
+            among users associated with similar ads.
+
+        </p>
+
+
+        <div class="table-container">
+
+            <table>
+
+                <thead>
+
+                    <tr>
+
+                        <th>
+                            Rank
+                        </th>
+
+                        <th>
+                            Country
+                        </th>
+
+                        <th>
+                            Events
+                        </th>
+
+                        <th>
+                            Engagement
+                        </th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody>
+
+                    {% for item
+                       in intelligence.regional %}
+
+                    <tr>
+
+                        <td>
+
+                            {{ loop.index }}
+
+                        </td>
+
+
+                        <td>
+
+                            {{ item.country }}
+
+                        </td>
+
+
+                        <td>
+
+                            {{ item.events }}
+
+                        </td>
+
+
+                        <td>
+
+                            {{ item.engagement }}
+
+                        </td>
+
+                    </tr>
+
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- EXPLANATION -->
+
+    <div class="intel-card">
+
+        <h2>
+
+            💡 Intelligence Summary
+
+        </h2>
+
+
+        <p>
+
+            The trend analysis uses historical event
+            activity from advertisements identified as
+            similar to the uploaded advertisement.
+
+        </p>
+
+
+        <p>
+
+            Regional analysis connects historical
+            advertisement events with the available
+            user country and location information.
+
+        </p>
+
+
+        <p>
+
+            These results represent historical patterns
+            from the supplied dataset and should not be
+            interpreted as guaranteed future campaign
+            performance.
+
+        </p>
+
+    </div>
+
+
+
+    <!-- NAVIGATION -->
+
+    <a
+        href="/best-release-time/{{ filename }}"
+        class="button"
+    >
+
+        ← Best Release Time
+
+    </a>
+
+
+    <a
+        href="/dashboard"
+        class="button primary"
+    >
+
+        🏠 Dashboard
+
+    </a>
+<a
+    href="/competitor-intelligence/{{ filename }}"
+    class="button primary"
+>
+    🏆 Competitor Intelligence →
+</a>
+
+</div>
+
+
+</body>
+
+</html>

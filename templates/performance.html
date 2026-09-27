@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Performance Prediction - AI Meta Ads</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <style>
+        .performance-container { width:90%; max-width:1200px; margin:40px auto; }
+        .page-header { text-align:center; margin-bottom:35px; }
+        .prediction-note { background:#f8fafc; padding:15px 20px; border-radius:12px; margin-bottom:25px; color:#475569; }
+        .ad-profile, .prediction-card { background:white; padding:25px; border-radius:16px; box-shadow:0 5px 20px rgba(0,0,0,.08); margin-bottom:25px; }
+        .profile-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:15px; margin-top:18px; }
+        .profile-item { background:#f8fafc; padding:15px; border-radius:10px; }
+        .metrics { display:grid; grid-template-columns:repeat(auto-fit,minmax(210px,1fr)); gap:18px; }
+        .metric { background:#f8fafc; padding:22px; border-radius:14px; text-align:center; }
+        .metric strong { display:block; font-size:28px; margin-bottom:7px; }
+        .metric span { color:#64748b; font-size:13px; }
+        .confidence { display:inline-block; padding:8px 15px; border-radius:20px; background:#eef2ff; color:#4338ca; font-weight:bold; }
+        .similar-table { width:100%; border-collapse:collapse; margin-top:15px; }
+        .similar-table th, .similar-table td { padding:12px; border-bottom:1px solid #e5e7eb; text-align:left; }
+        .back-button { display:inline-block; margin-top:10px; padding:12px 22px; text-decoration:none; border-radius:8px; background:#111827; color:white; }
+        @media(max-width:700px) { .similar-table { font-size:12px; } }
+    </style>
+</head>
+<body>
+<nav class="navbar">
+    <div class="logo">🚀 AI Meta Ads</div>
+    <div class="nav-links">
+        <a href="/dashboard">Dashboard</a>
+        <a href="/logout">Logout</a>
+    </div>
+</nav>
+
+<div class="performance-container">
+    <div class="page-header">
+        <h1>📈 Advertisement Performance Prediction</h1>
+        <p>Historical performance estimate based on similar advertisements.</p>
+    </div>
+
+    <div class="prediction-note">
+        <strong>Method:</strong> {{ prediction.prediction_method }}.
+        This is a model-based historical estimate, not a live Meta prediction or guaranteed campaign result.
+    </div>
+
+    <div class="ad-profile">
+        <h2>🎯 Advertisement Profile</h2>
+        <div class="profile-grid">
+            <div class="profile-item"><strong>Category</strong><br>{{ analysis.category }}</div>
+            <div class="profile-item"><strong>Product</strong><br>{{ analysis.product }}</div>
+            <div class="profile-item"><strong>Creative Type</strong><br>{{ analysis.creative_type }}</div>
+            <div class="profile-item"><strong>Offer</strong><br>{{ analysis.offer }}</div>
+        </div>
+    </div>
+
+    <div class="prediction-card">
+        <h2>🔮 Predicted Performance</h2>
+        <br>
+        <div class="metrics">
+            <div class="metric">
+                <strong>{{ prediction.predicted_ctr }}%</strong>
+                <span>Predicted CTR</span>
+            </div>
+            <div class="metric">
+                <strong>{{ prediction.predicted_engagement_rate }}%</strong>
+                <span>Predicted Engagement Rate</span>
+            </div>
+            <div class="metric">
+                <strong>{{ prediction.predicted_click_to_purchase_rate }}%</strong>
+                <span>Predicted Click → Purchase Rate</span>
+            </div>
+            <div class="metric">
+                <strong>{{ prediction.estimated_purchases_per_1000_impressions }}</strong>
+                <span>Estimated Purchases / 1,000 Impressions</span>
+            </div>
+        </div>
+        <br>
+        <p><strong>Historical Ads Used:</strong> {{ prediction.sample_size }}</p>
+        <p><strong>Average Similarity:</strong> {{ prediction.average_similarity }}%</p>
+        <p><strong>Confidence:</strong> <span class="confidence">{{ prediction.confidence }}</span></p>
+    </div>
+
+    <div class="prediction-card">
+        <h2>📊 Historical Ads Used for Prediction</h2>
+        <table class="similar-table">
+            <thead>
+                <tr>
+                    <th>Ad ID</th>
+                    <th>Similarity</th>
+                    <th>CTR</th>
+                    <th>Purchases</th>
+                    <th>Platform</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for ad in prediction.similar_ads %}
+                <tr>
+                    <td>#{{ ad.ad_id }}</td>
+                    <td>{{ ad.similarity }}%</td>
+                    <td>{{ ad.ctr }}%</td>
+                    <td>{{ ad.purchase }}</td>
+                    <td>{{ ad.platform }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <a href="{{ url_for('similar_ads', filename=filename) }}" class="back-button">
+        ← Back to Similar Advertisements
+    </a>
+    <a
+    href="{{ url_for(
+        'audience_recommendation',
+        filename=filename
+    ) }}"
+    class="back-button"
+>
+    🎯 Get Audience Recommendation
+</a>
+</div>
+</body>
+</html>

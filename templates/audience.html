@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>
+        Audience Recommendation - AI Meta Ads
+    </title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static',
+          filename='css/style.css') }}">
+
+    <style>
+
+        .audience-container {
+
+            width: 90%;
+            max-width: 1100px;
+            margin: 40px auto;
+
+        }
+
+        .page-header {
+
+            text-align: center;
+            margin-bottom: 35px;
+
+        }
+
+        .page-header h1 {
+
+            font-size: 34px;
+            margin-bottom: 10px;
+
+        }
+
+        .page-header p {
+
+            color: #666;
+
+        }
+
+        .profile-card {
+
+            background: white;
+            padding: 25px;
+            border-radius: 16px;
+
+            box-shadow:
+                0 5px 20px rgba(0,0,0,0.08);
+
+            margin-bottom: 25px;
+
+        }
+
+        .profile-grid {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(auto-fit, minmax(200px, 1fr));
+
+            gap: 15px;
+
+            margin-top: 20px;
+
+        }
+
+        .profile-item {
+
+            background: #f7f7f7;
+
+            padding: 15px;
+
+            border-radius: 10px;
+
+        }
+
+        .profile-item strong {
+
+            display: block;
+
+            margin-bottom: 7px;
+
+        }
+
+        .recommendation-card {
+
+            background: white;
+
+            padding: 30px;
+
+            border-radius: 18px;
+
+            box-shadow:
+                0 5px 20px rgba(0,0,0,0.08);
+
+        }
+
+        .recommendation-grid {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(auto-fit, minmax(220px, 1fr));
+
+            gap: 20px;
+
+            margin-top: 25px;
+
+        }
+
+        .recommendation-box {
+
+            padding: 22px;
+
+            border-radius: 14px;
+
+            background: #f8f9ff;
+
+            text-align: center;
+
+        }
+
+        .recommendation-box .icon {
+
+            font-size: 32px;
+
+            margin-bottom: 10px;
+
+        }
+
+        .recommendation-box h3 {
+
+            margin-bottom: 10px;
+
+        }
+
+        .recommendation-value {
+
+            font-size: 20px;
+
+            font-weight: bold;
+
+        }
+
+        .interest-list {
+
+            display: flex;
+
+            flex-wrap: wrap;
+
+            justify-content: center;
+
+            gap: 8px;
+
+            margin-top: 10px;
+
+        }
+
+        .interest-tag {
+
+            background: #eef2ff;
+
+            color: #4338ca;
+
+            padding: 7px 12px;
+
+            border-radius: 20px;
+
+            font-size: 13px;
+
+            font-weight: bold;
+
+        }
+
+        .platform-list {
+
+            margin-top: 10px;
+
+        }
+
+        .platform-tag {
+
+            display: inline-block;
+
+            margin: 4px;
+
+            padding: 7px 12px;
+
+            background: #f1f5f9;
+
+            border-radius: 20px;
+
+            font-size: 13px;
+
+        }
+
+        .reason-box {
+
+            margin-top: 25px;
+
+            padding: 20px;
+
+            background: #f8fafc;
+
+            border-left: 5px solid #4338ca;
+
+            border-radius: 10px;
+
+        }
+
+        .back-button {
+
+            display: inline-block;
+
+            margin-top: 30px;
+
+            padding: 12px 22px;
+
+            text-decoration: none;
+
+            border-radius: 8px;
+
+            background: #111827;
+
+            color: white;
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<nav class="navbar">
+
+    <div class="logo">
+
+        🚀 AI Meta Ads
+
+    </div>
+
+    <div class="nav-links">
+
+        <a href="/dashboard">
+            Dashboard
+        </a>
+
+        <a href="/logout">
+            Logout
+        </a>
+
+    </div>
+
+</nav>
+
+
+<div class="audience-container">
+
+
+    <!-- HEADER -->
+
+    <div class="page-header">
+
+        <h1>
+
+            🎯 Audience Recommendation
+
+        </h1>
+
+        <p>
+
+            Historical-data-based audience recommendation
+            for your advertisement.
+
+        </p>
+
+    </div>
+
+
+    <!-- AD PROFILE -->
+
+    <div class="profile-card">
+
+        <h2>
+
+            📝 Advertisement Profile
+
+        </h2>
+
+
+        <div class="profile-grid">
+
+
+            <div class="profile-item">
+
+                <strong>
+                    Category
+                </strong>
+
+                {{ analysis.category }}
+
+            </div>
+
+
+            <div class="profile-item">
+
+                <strong>
+                    Product
+                </strong>
+
+                {{ analysis.product }}
+
+            </div>
+
+
+            <div class="profile-item">
+
+                <strong>
+                    Creative Type
+                </strong>
+
+                {{ analysis.creative_type }}
+
+            </div>
+
+
+            <div class="profile-item">
+
+                <strong>
+                    Offer
+                </strong>
+
+                {{ analysis.offer }}
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+
+    <!-- RECOMMENDATION -->
+
+    <div class="recommendation-card">
+
+        <h2>
+
+            🎯 Recommended Audience
+
+        </h2>
+
+
+        <div class="recommendation-grid">
+
+
+            <!-- AGE -->
+
+            <div class="recommendation-box">
+
+                <div class="icon">
+                    👥
+                </div>
+
+                <h3>
+                    Age Group
+                </h3>
+
+                <div class="recommendation-value">
+
+                    {{ recommendation.age_group }}
+
+                </div>
+
+            </div>
+
+
+            <!-- GENDER -->
+
+            <div class="recommendation-box">
+
+                <div class="icon">
+                    👤
+                </div>
+
+                <h3>
+                    Gender
+                </h3>
+
+                <div class="recommendation-value">
+
+                    {{ recommendation.gender }}
+
+                </div>
+
+            </div>
+
+
+            <!-- PLATFORM -->
+
+            <div class="recommendation-box">
+
+                <div class="icon">
+                    📱
+                </div>
+
+                <h3>
+                    Platforms
+                </h3>
+
+                <div class="platform-list">
+
+                    {% for platform
+                       in recommendation.platforms %}
+
+                        <span class="platform-tag">
+
+                            {{ platform }}
+
+                        </span>
+
+                    {% endfor %}
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+
+        <!-- INTERESTS -->
+
+        <div class="recommendation-box"
+             style="margin-top:20px;">
+
+            <div class="icon">
+                ❤️
+            </div>
+
+            <h3>
+                Recommended Interests
+            </h3>
+
+
+            <div class="interest-list">
+
+                {% for interest
+                   in recommendation.interests %}
+
+                    <span class="interest-tag">
+
+                        {{ interest }}
+
+                    </span>
+
+                {% endfor %}
+
+            </div>
+
+        </div>
+
+
+        <!-- REASON -->
+
+        <div class="reason-box">
+
+            <strong>
+                💡 Why this audience?
+            </strong>
+
+            <p>
+
+                {{ recommendation.reason }}
+
+            </p>
+
+            <p>
+
+                <strong>
+                    Historical Ads Used:
+                </strong>
+
+                {{ recommendation.ads_used }}
+
+            </p>
+
+        </div>
+
+
+    </div>
+
+
+    <a
+        href="/performance-prediction/{{ filename }}"
+        class="back-button"
+    >
+
+        ← Back to Performance Prediction
+
+    </a>
+
+<a
+    href="{{ url_for(
+        'best_release_time',
+        filename=filename
+    ) }}"
+    class="next-button"
+>
+    🕐 Find Best Release Time →
+</a>
+</div>
+
+
+</body>
+
+</html>

@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Ad Fatigue Detection | AI Meta Ads</title>
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #f5f7fb;
+            color: #1f2937;
+        }
+
+        .navbar {
+            background: #111827;
+            color: white;
+            padding: 18px 40px;
+
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .navbar h2 {
+            font-size: 22px;
+        }
+
+        .navbar a {
+            color: white;
+            text-decoration: none;
+            margin-left: 20px;
+        }
+
+        .container {
+            width: 92%;
+            max-width: 1200px;
+            margin: 35px auto;
+        }
+
+        .title {
+            margin-bottom: 25px;
+        }
+
+        .title h1 {
+            font-size: 30px;
+            margin-bottom: 8px;
+        }
+
+        .title p {
+            color: #6b7280;
+        }
+
+        .section {
+            background: white;
+            padding: 25px;
+            border-radius: 14px;
+            margin-bottom: 25px;
+
+            box-shadow:
+                0 4px 15px rgba(0,0,0,0.06);
+        }
+
+        .section h2 {
+            margin-bottom: 20px;
+        }
+
+        .profile-grid,
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 18px;
+        }
+
+        .item {
+            background: #f8fafc;
+            padding: 18px;
+            border-radius: 10px;
+        }
+
+        .item span {
+            display: block;
+            color: #6b7280;
+            font-size: 14px;
+            margin-bottom: 8px;
+        }
+
+        .item strong {
+            font-size: 18px;
+        }
+
+        .fatigue-box {
+            text-align: center;
+            padding: 30px;
+            background: #f8fafc;
+            border-radius: 14px;
+        }
+
+        .fatigue-level {
+            font-size: 38px;
+            font-weight: bold;
+            margin: 15px 0;
+        }
+
+        .score {
+            font-size: 20px;
+            color: #6b7280;
+        }
+
+        .insight {
+            background: #eef2ff;
+            border-left: 5px solid #4f46e5;
+            padding: 20px;
+            border-radius: 10px;
+            line-height: 1.6;
+        }
+
+        .recommendation {
+            background: #f8fafc;
+            padding: 20px;
+            border-radius: 10px;
+            line-height: 1.7;
+        }
+
+        .method {
+            color: #6b7280;
+            line-height: 1.7;
+            font-size: 14px;
+        }
+
+        .back-btn {
+            display: inline-block;
+            padding: 11px 18px;
+            background: #111827;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+        }
+
+        .disclaimer {
+            color: #6b7280;
+            font-size: 13px;
+            line-height: 1.7;
+        }
+
+        @media (max-width: 800px) {
+
+            .profile-grid,
+            .metrics-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .navbar {
+                padding: 15px 20px;
+            }
+
+            .container {
+                width: 95%;
+            }
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<div class="navbar">
+
+    <h2>AI Meta Ads</h2>
+
+    <div>
+
+        <a href="{{ url_for('dashboard') }}">
+            Dashboard
+        </a>
+
+        <a href="{{ url_for('logout') }}">
+            Logout
+        </a>
+
+    </div>
+
+</div>
+
+
+<div class="container">
+
+
+    <div class="title">
+
+        <h1>Ad Fatigue Detection</h1>
+
+        <p>
+            Performance-based fatigue analysis using
+            historically similar advertisements.
+        </p>
+
+    </div>
+
+
+    <!-- AD PROFILE -->
+
+    <div class="section">
+
+        <h2>Advertisement Profile</h2>
+
+        <div class="profile-grid">
+
+            <div class="item">
+
+                <span>Category</span>
+
+                <strong>
+                    {{ analysis.category }}
+                </strong>
+
+            </div>
+
+            <div class="item">
+
+                <span>Product</span>
+
+                <strong>
+                    {{ analysis.product }}
+                </strong>
+
+            </div>
+
+            <div class="item">
+
+                <span>Creative Type</span>
+
+                <strong>
+                    {{ analysis.creative_type }}
+                </strong>
+
+            </div>
+
+            <div class="item">
+
+                <span>Offer</span>
+
+                <strong>
+                    {{ analysis.offer }}
+                </strong>
+
+            </div>
+
+            <div class="item">
+
+                <span>Ads Analyzed</span>
+
+                <strong>
+                    {{ fatigue.ads_analyzed }}
+                </strong>
+
+            </div>
+
+            <div class="item">
+
+                <span>Analysis Method</span>
+
+                <strong>
+                    Performance Based
+                </strong>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- FATIGUE RESULT -->
+
+    <div class="section">
+
+        <h2>Fatigue Assessment</h2>
+
+        <div class="fatigue-box">
+
+            <div class="score">
+                Fatigue Score
+            </div>
+
+            <div class="fatigue-level">
+                {{ fatigue.fatigue_level }}
+            </div>
+
+            <div class="score">
+                Score: {{ fatigue.fatigue_score }}/100
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- METRICS -->
+
+    <div class="section">
+
+        <h2>Performance Indicators</h2>
+
+        <div class="metrics-grid">
+
+            <div class="item">
+
+                <span>CTR</span>
+
+                <strong>
+                    {{ fatigue.ctr }}%
+                </strong>
+
+            </div>
+
+            <div class="item">
+
+                <span>Engagement Rate</span>
+
+                <strong>
+                    {{ fatigue.engagement_rate }}%
+                </strong>
+
+            </div>
+
+            <div class="item">
+
+                <span>Purchase Rate</span>
+
+                <strong>
+                    {{ fatigue.purchase_rate }}%
+                </strong>
+
+            </div>
+
+            <div class="item">
+
+                <span>Impressions</span>
+
+                <strong>
+                    {{ fatigue.impressions }}
+                </strong>
+
+            </div>
+
+            <div class="item">
+
+                <span>Clicks</span>
+
+                <strong>
+                    {{ fatigue.clicks }}
+                </strong>
+
+            </div>
+
+            <div class="item">
+
+                <span>Purchases</span>
+
+                <strong>
+                    {{ fatigue.purchases }}
+                </strong>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- TREND -->
+
+    <div class="section">
+
+        <h2>Performance Trend</h2>
+
+        <div class="insight">
+
+            {{ fatigue.trend }}
+
+        </div>
+
+    </div>
+
+
+    <!-- AI INSIGHT -->
+
+    <div class="section">
+
+        <h2>AI Fatigue Insight</h2>
+
+        <div class="insight">
+
+            {{ fatigue.insight }}
+
+        </div>
+
+    </div>
+
+
+    <!-- RECOMMENDATION -->
+
+    <div class="section">
+
+        <h2>Recommended Action</h2>
+
+        <div class="recommendation">
+
+            {{ fatigue.recommendation }}
+
+        </div>
+
+    </div>
+
+
+    <!-- METHOD -->
+
+    <div class="section">
+
+        <h2>Analysis Method</h2>
+
+        <p class="method">
+
+            <strong>
+                {{ fatigue.method }}
+            </strong>
+
+            <br><br>
+
+            The system uses CTR, engagement rate and
+            purchase rate from historically similar
+            advertisements to generate a performance-based
+            fatigue indicator.
+
+        </p>
+
+    </div>
+
+
+    <!-- DISCLAIMER -->
+
+    <div class="section">
+
+        <h2>Important Note</h2>
+
+        <p class="disclaimer">
+
+            The dataset does not contain direct ad-frequency
+            or individual-user exposure measurements.
+            Therefore, this module provides a performance-based
+            fatigue indicator rather than claiming to measure
+            actual user-level ad fatigue.
+
+        </p>
+
+    </div>
+
+
+    <a class="back-btn"
+       href="{{ url_for('dashboard') }}">
+
+        ← Back to Dashboard
+
+    </a>
+
+
+</div>
+
+
+</body>
+
+</html>

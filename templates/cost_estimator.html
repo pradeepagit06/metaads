@@ -1,0 +1,674 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Cost Estimator | AI Meta Ads</title>
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #f5f7fb;
+            color: #1f2937;
+        }
+
+        /* ================= NAVBAR ================= */
+
+        .navbar {
+            background: #111827;
+            color: white;
+            padding: 18px 40px;
+
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .navbar h2 {
+            font-size: 22px;
+        }
+
+        .navbar a {
+            color: white;
+            text-decoration: none;
+            margin-left: 20px;
+        }
+
+        /* ================= CONTAINER ================= */
+
+        .container {
+            width: 92%;
+            max-width: 1200px;
+            margin: 35px auto;
+        }
+
+        /* ================= TITLE ================= */
+
+        .page-title {
+            margin-bottom: 25px;
+        }
+
+        .page-title h1 {
+            font-size: 30px;
+            margin-bottom: 8px;
+        }
+
+        .page-title p {
+            color: #6b7280;
+        }
+
+        /* ================= PROFILE ================= */
+
+        .profile {
+            background: white;
+            border-radius: 14px;
+            padding: 25px;
+            margin-bottom: 25px;
+
+            box-shadow:
+                0 4px 15px rgba(0, 0, 0, 0.06);
+        }
+
+        .profile h2 {
+            margin-bottom: 20px;
+        }
+
+        .profile-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 18px;
+        }
+
+        .profile-item {
+            background: #f8fafc;
+            padding: 18px;
+            border-radius: 10px;
+        }
+
+        .profile-item span {
+            display: block;
+            color: #6b7280;
+            font-size: 14px;
+            margin-bottom: 7px;
+        }
+
+        .profile-item strong {
+            font-size: 16px;
+        }
+
+        /* ================= COST CARDS ================= */
+
+        .cost-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin-bottom: 25px;
+        }
+
+        .cost-card {
+            background: white;
+            padding: 25px;
+            border-radius: 14px;
+
+            box-shadow:
+                0 4px 15px rgba(0, 0, 0, 0.06);
+        }
+
+        .cost-card h3 {
+            color: #6b7280;
+            font-size: 15px;
+            margin-bottom: 12px;
+        }
+
+        .cost-value {
+            font-size: 30px;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+
+        .cost-description {
+            color: #6b7280;
+            font-size: 13px;
+        }
+
+        /* ================= SECTION ================= */
+
+        .section {
+            background: white;
+            border-radius: 14px;
+            padding: 25px;
+            margin-bottom: 25px;
+
+            box-shadow:
+                0 4px 15px rgba(0, 0, 0, 0.06);
+        }
+
+        .section h2 {
+            margin-bottom: 20px;
+        }
+
+        /* ================= METRICS ================= */
+
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 18px;
+        }
+
+        .metric {
+            background: #f8fafc;
+            padding: 18px;
+            border-radius: 10px;
+        }
+
+        .metric span {
+            display: block;
+            color: #6b7280;
+            font-size: 14px;
+            margin-bottom: 8px;
+        }
+
+        .metric strong {
+            font-size: 20px;
+        }
+
+        /* ================= INSIGHT ================= */
+
+        .insight {
+            background: #eef2ff;
+            border-left: 5px solid #4f46e5;
+            padding: 20px;
+            border-radius: 10px;
+
+            line-height: 1.6;
+        }
+
+        /* ================= METHOD ================= */
+
+        .method {
+            background: #f8fafc;
+            padding: 18px;
+            border-radius: 10px;
+
+            line-height: 1.7;
+        }
+
+        .method strong {
+            color: #111827;
+        }
+
+        /* ================= DISCLAIMER ================= */
+
+        .disclaimer {
+            color: #6b7280;
+            font-size: 13px;
+            line-height: 1.7;
+        }
+
+        /* ================= BUTTON ================= */
+
+        .back-btn {
+            display: inline-block;
+
+            margin-top: 5px;
+
+            padding: 11px 18px;
+
+            background: #111827;
+            color: white;
+
+            text-decoration: none;
+
+            border-radius: 8px;
+        }
+
+        .back-btn:hover {
+            opacity: 0.9;
+        }
+
+        /* ================= RESPONSIVE ================= */
+
+        @media (max-width: 850px) {
+
+            .profile-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .cost-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .metrics-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .navbar {
+                padding: 15px 20px;
+            }
+
+            .container {
+                width: 95%;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- ================================================= -->
+<!-- NAVBAR -->
+<!-- ================================================= -->
+
+<div class="navbar">
+
+    <h2>AI Meta Ads</h2>
+
+    <div>
+
+        <a href="{{ url_for('dashboard') }}">
+            Dashboard
+        </a>
+
+        <a href="{{ url_for('logout') }}">
+            Logout
+        </a>
+
+    </div>
+
+</div>
+
+
+<!-- ================================================= -->
+<!-- MAIN CONTAINER -->
+<!-- ================================================= -->
+
+<div class="container">
+
+
+    <!-- ================================================= -->
+    <!-- PAGE TITLE -->
+    <!-- ================================================= -->
+
+    <div class="page-title">
+
+        <h1>Advertisement Cost Estimator</h1>
+
+        <p>
+            Estimate campaign-level advertising cost
+            using historically similar advertisements.
+        </p>
+
+    </div>
+
+
+    <!-- ================================================= -->
+    <!-- ADVERTISEMENT PROFILE -->
+    <!-- ================================================= -->
+
+    <div class="profile">
+
+        <h2>Advertisement Profile</h2>
+
+
+        <div class="profile-grid">
+
+
+            <div class="profile-item">
+
+                <span>Category</span>
+
+                <strong>
+                    {{ analysis.category }}
+                </strong>
+
+            </div>
+
+
+            <div class="profile-item">
+
+                <span>Product</span>
+
+                <strong>
+                    {{ analysis.product }}
+                </strong>
+
+            </div>
+
+
+            <div class="profile-item">
+
+                <span>Creative Type</span>
+
+                <strong>
+                    {{ analysis.creative_type }}
+                </strong>
+
+            </div>
+
+
+            <div class="profile-item">
+
+                <span>Offer</span>
+
+                <strong>
+                    {{ analysis.offer }}
+                </strong>
+
+            </div>
+
+
+            <div class="profile-item">
+
+                <span>Recommended Audience</span>
+
+                <strong>
+                    {{ analysis.audience }}
+                </strong>
+
+            </div>
+
+
+            <div class="profile-item">
+
+                <span>Historical Ads Used</span>
+
+                <strong>
+                    {{ cost.ads_used }}
+                </strong>
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+
+    <!-- ================================================= -->
+    <!-- COST ESTIMATION CARDS -->
+    <!-- ================================================= -->
+
+    <div class="cost-grid">
+
+
+        <!-- CPM -->
+
+        <div class="cost-card">
+
+            <h3>
+                Estimated CPM
+            </h3>
+
+            <div class="cost-value">
+
+                ₹{{ cost.estimated_cpm }}
+
+            </div>
+
+            <div class="cost-description">
+
+                Estimated cost per 1,000 impressions
+
+            </div>
+
+        </div>
+
+
+        <!-- CPC -->
+
+        <div class="cost-card">
+
+            <h3>
+                Estimated CPC
+            </h3>
+
+            <div class="cost-value">
+
+                ₹{{ cost.estimated_cpc }}
+
+            </div>
+
+            <div class="cost-description">
+
+                Estimated cost per click
+
+            </div>
+
+        </div>
+
+
+        <!-- BUDGET -->
+
+        <div class="cost-card">
+
+            <h3>
+                Estimated Budget
+            </h3>
+
+            <div class="cost-value">
+
+                ₹{{ cost.estimated_budget }}
+
+            </div>
+
+            <div class="cost-description">
+
+                Reference budget for
+                {{ cost.estimated_impressions }}
+                impressions
+
+            </div>
+
+        </div>
+
+
+    </div>
+
+
+    <!-- ================================================= -->
+    <!-- HISTORICAL PERFORMANCE -->
+    <!-- ================================================= -->
+
+    <div class="section">
+
+        <h2>
+            Historical Reference
+        </h2>
+
+
+        <div class="metrics-grid">
+
+
+            <div class="metric">
+
+                <span>
+                    Historical Impressions
+                </span>
+
+                <strong>
+                    {{ cost.historical_impressions }}
+                </strong>
+
+            </div>
+
+
+            <div class="metric">
+
+                <span>
+                    Historical Clicks
+                </span>
+
+                <strong>
+                    {{ cost.historical_clicks }}
+                </strong>
+
+            </div>
+
+
+            <div class="metric">
+
+                <span>
+                    Historical Purchases
+                </span>
+
+                <strong>
+                    {{ cost.historical_purchases }}
+                </strong>
+
+            </div>
+
+
+            <div class="metric">
+
+                <span>
+                    Historical CTR
+                </span>
+
+                <strong>
+                    {{ cost.historical_ctr }}%
+                </strong>
+
+            </div>
+
+
+            <div class="metric">
+
+                <span>
+                    Similar Ads Used
+                </span>
+
+                <strong>
+                    {{ cost.ads_used }}
+                </strong>
+
+            </div>
+
+
+            <div class="metric">
+
+                <span>
+                    Target Impressions
+                </span>
+
+                <strong>
+                    {{ cost.estimated_impressions }}
+                </strong>
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+
+    <!-- ================================================= -->
+    <!-- AI COST INSIGHT -->
+    <!-- ================================================= -->
+
+    <div class="section">
+
+        <h2>
+            AI Cost Insight
+        </h2>
+
+
+        <div class="insight">
+
+            {{ cost.insight }}
+
+        </div>
+
+    </div>
+
+
+    <!-- ================================================= -->
+    <!-- ESTIMATION METHOD -->
+    <!-- ================================================= -->
+
+    <div class="section">
+
+        <h2>
+            Estimation Method
+        </h2>
+
+
+        <div class="method">
+
+            <strong>
+                {{ cost.method }}
+            </strong>
+
+            <br>
+
+            The estimate is calculated using the historical
+            performance of advertisements that are similar
+            to the uploaded advertisement.
+
+        </div>
+
+    </div>
+
+
+    <!-- ================================================= -->
+    <!-- DISCLAIMER -->
+    <!-- ================================================= -->
+
+    <div class="section">
+
+        <h2>
+            Important Note
+        </h2>
+
+
+        <p class="disclaimer">
+
+            The displayed CPM, CPC and budget values are
+            project-level estimates generated from the
+            available historical dataset. They are not live
+            Meta advertising prices, quotations or guaranteed
+            campaign costs. Actual advertising costs may vary
+            based on platform, audience, competition, campaign
+            objective, bidding strategy, geography and other
+            factors.
+
+        </p>
+
+    </div>
+
+
+    <!-- ================================================= -->
+    <!-- BACK BUTTON -->
+    <!-- ================================================= -->
+
+    <a class="back-btn"
+       href="{{ url_for('dashboard') }}">
+
+        ← Back to Dashboard
+
+    </a>
+
+
+</div>
+
+
+</body>
+
+</html>

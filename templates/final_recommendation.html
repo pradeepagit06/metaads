@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Final Campaign Recommendation</title>
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #f5f7fb;
+            color: #1f2937;
+        }
+
+        .navbar {
+            background: #111827;
+            color: white;
+            padding: 18px 40px;
+
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .navbar h2 {
+            font-size: 22px;
+        }
+
+        .navbar a {
+            color: white;
+            text-decoration: none;
+            margin-left: 20px;
+        }
+
+        .container {
+            width: 92%;
+            max-width: 1250px;
+            margin: 35px auto;
+        }
+
+        .title {
+            margin-bottom: 25px;
+        }
+
+        .title h1 {
+            font-size: 30px;
+            margin-bottom: 8px;
+        }
+
+        .title p {
+            color: #6b7280;
+        }
+
+        .section {
+            background: white;
+            padding: 25px;
+            border-radius: 14px;
+            margin-bottom: 25px;
+
+            box-shadow:
+                0 4px 15px rgba(0,0,0,0.06);
+        }
+
+        .section h2 {
+            margin-bottom: 20px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 18px;
+        }
+
+        .card {
+            background: #f8fafc;
+            padding: 20px;
+            border-radius: 10px;
+        }
+
+        .card span {
+            display: block;
+            color: #6b7280;
+            font-size: 14px;
+            margin-bottom: 8px;
+        }
+
+        .card strong {
+            font-size: 19px;
+        }
+
+        .summary {
+            background: #eef2ff;
+            border-left: 5px solid #4f46e5;
+            padding: 22px;
+            border-radius: 10px;
+            line-height: 1.7;
+        }
+
+        .strategy {
+            background: #f8fafc;
+            padding: 20px;
+            border-radius: 10px;
+            line-height: 1.7;
+        }
+
+        .list {
+            padding-left: 20px;
+            line-height: 2;
+        }
+
+        .warning {
+            background: #fff7ed;
+            border-left: 5px solid #f97316;
+            padding: 20px;
+            border-radius: 10px;
+            line-height: 1.7;
+        }
+
+        .method {
+            color: #6b7280;
+            font-size: 14px;
+            line-height: 1.7;
+        }
+
+        .back-btn {
+            display: inline-block;
+            padding: 11px 18px;
+            background: #111827;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+        }
+
+        @media (max-width: 850px) {
+
+            .grid {
+                grid-template-columns: 1fr;
+            }
+
+            .navbar {
+                padding: 15px 20px;
+            }
+
+            .container {
+                width: 95%;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<div class="navbar">
+
+    <h2>AI Meta Ads</h2>
+
+    <div>
+
+        <a href="{{ url_for('dashboard') }}">
+            Dashboard
+        </a>
+
+        <a href="{{ url_for('logout') }}">
+            Logout
+        </a>
+
+    </div>
+
+</div>
+
+
+<div class="container">
+
+
+    <div class="title">
+
+        <h1>
+            Final Campaign Recommendation
+        </h1>
+
+        <p>
+            Integrated recommendation generated from
+            advertisement analysis and historical data.
+        </p>
+
+    </div>
+
+
+    <!-- ================= AD PROFILE ================= -->
+
+    <div class="section">
+
+        <h2>Advertisement Profile</h2>
+
+        <div class="grid">
+
+            <div class="card">
+
+                <span>Category</span>
+
+                <strong>
+                    {{ recommendation.category }}
+                </strong>
+
+            </div>
+
+            <div class="card">
+
+                <span>Product</span>
+
+                <strong>
+                    {{ recommendation.product }}
+                </strong>
+
+            </div>
+
+            <div class="card">
+
+                <span>Creative Type</span>
+
+                <strong>
+                    {{ recommendation.creative_type }}
+                </strong>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- ================= SUMMARY ================= -->
+
+    <div class="section">
+
+        <h2>AI Campaign Summary</h2>
+
+        <div class="summary">
+
+            {{ recommendation.summary }}
+
+        </div>
+
+    </div>
+
+
+    <!-- ================= PERFORMANCE ================= -->
+
+    <div class="section">
+
+        <h2>Performance Prediction</h2>
+
+        <div class="grid">
+
+            <div class="card">
+
+                <span>Predicted CTR</span>
+
+                <strong>
+                    {{ recommendation.predicted_ctr }}%
+                </strong>
+
+            </div>
+
+            <div class="card">
+
+                <span>Predicted Engagement</span>
+
+                <strong>
+                    {{ recommendation.predicted_engagement }}%
+                </strong>
+
+            </div>
+
+            <div class="card">
+
+                <span>Predicted Click → Purchase</span>
+
+                <strong>
+                    {{ recommendation.predicted_purchase }}%
+                </strong>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- ================= AUDIENCE ================= -->
+
+    <div class="section">
+
+        <h2>Recommended Audience</h2>
+
+        <div class="grid">
+
+            <div class="card">
+
+                <span>Age Group</span>
+
+                <strong>
+                    {{ recommendation.recommended_age }}
+                </strong>
+
+            </div>
+
+            <div class="card">
+
+                <span>Gender</span>
+
+                <strong>
+                    {{ recommendation.recommended_gender }}
+                </strong>
+
+            </div>
+
+            <div class="card">
+
+                <span>Interests</span>
+
+                <strong>
+                    {{ recommendation.recommended_interests }}
+                </strong>
+
+            </div>
+
+            <div class="card">
+
+                <span>Recommended Platforms</span>
+
+                <strong>
+                    {{ recommendation.recommended_platforms }}
+                </strong>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- ================= TIMING ================= -->
+
+    <div class="section">
+
+        <h2>Recommended Release Timing</h2>
+
+        <div class="grid">
+
+            <div class="card">
+
+                <span>Day</span>
+
+                <strong>
+                    {{ recommendation.recommended_day }}
+                </strong>
+
+            </div>
+
+            <div class="card">
+
+                <span>Time</span>
+
+                <strong>
+                    {{ recommendation.recommended_time }}
+                </strong>
+
+            </div>
+
+            <div class="card">
+
+                <span>Region</span>
+
+                <strong>
+                    {{ recommendation.regional_target }}
+                </strong>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- ================= COST ================= -->
+
+    <div class="section">
+
+        <h2>Campaign Cost Reference</h2>
+
+        <div class="grid">
+
+            <div class="card">
+
+                <span>Estimated CPM</span>
+
+                <strong>
+                    ₹{{ recommendation.estimated_cpm }}
+                </strong>
+
+            </div>
+
+            <div class="card">
+
+                <span>Estimated CPC</span>
+
+                <strong>
+                    ₹{{ recommendation.estimated_cpc }}
+                </strong>
+
+            </div>
+
+            <div class="card">
+
+                <span>Reference Budget</span>
+
+                <strong>
+                    ₹{{ recommendation.estimated_budget }}
+                </strong>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- ================= FATIGUE ================= -->
+
+    <div class="section">
+
+        <h2>Creative Fatigue</h2>
+
+        <div class="grid">
+
+            <div class="card">
+
+                <span>Fatigue Level</span>
+
+                <strong>
+                    {{ recommendation.fatigue_level }}
+                </strong>
+
+            </div>
+
+            <div class="card">
+
+                <span>Fatigue Score</span>
+
+                <strong>
+                    {{ recommendation.fatigue_score }}/100
+                </strong>
+
+            </div>
+
+            <div class="card">
+
+                <span>Creative Action</span>
+
+                <strong>
+                    {{ recommendation.creative_action }}
+                </strong>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- ================= COMPETITOR ================= -->
+
+    <div class="section">
+
+        <h2>Competitor Intelligence</h2>
+
+        <div class="summary">
+
+            {{ recommendation.competitor_insight }}
+
+        </div>
+
+    </div>
+
+
+    <!-- ================= STRATEGY ================= -->
+
+    <div class="section">
+
+        <h2>Recommended Campaign Strategy</h2>
+
+        <div class="strategy">
+
+            {{ recommendation.campaign_strategy }}
+
+        </div>
+
+    </div>
+
+
+    <!-- ================= MONITORING ================= -->
+
+    <div class="section">
+
+        <h2>Recommended Monitoring Metrics</h2>
+
+        <ul class="list">
+
+            {% for item in recommendation.monitoring_points %}
+
+            <li>
+                {{ item }}
+            </li>
+
+            {% endfor %}
+
+        </ul>
+
+    </div>
+
+
+    <!-- ================= FATIGUE ACTION ================= -->
+
+    <div class="section">
+
+        <h2>Creative Recommendation</h2>
+
+        <div class="warning">
+
+            {{ recommendation.fatigue_action }}
+
+        </div>
+
+    </div>
+
+
+    <!-- ================= METHOD ================= -->
+
+    <div class="section">
+
+        <h2>Recommendation Method</h2>
+
+        <p class="method">
+
+            <strong>
+                {{ recommendation.method }}
+            </strong>
+
+            <br><br>
+
+            This recommendation combines outputs from
+            advertisement understanding, similarity analysis,
+            performance prediction, audience recommendation,
+            release-time analysis, regional intelligence,
+            competitor comparison, cost estimation and
+            performance-based fatigue analysis.
+
+        </p>
+
+    </div>
+
+<a class="back-btn"
+   href="{{ url_for('download_report', filename=filename) }}">
+    📄 Download Campaign Report
+</a>
+    <a class="back-btn"
+       href="{{ url_for('dashboard') }}">
+
+        ← Back to Dashboard
+
+    </a>
+
+
+</div>
+
+
+</body>
+
+</html>

@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Competitor Intelligence | AI Meta Ads</title>
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #f5f7fb;
+            color: #1f2937;
+        }
+
+        .navbar {
+            background: #111827;
+            color: white;
+            padding: 18px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .navbar h2 {
+            font-size: 22px;
+        }
+
+        .navbar a {
+            color: white;
+            text-decoration: none;
+            margin-left: 20px;
+        }
+
+        .container {
+            width: 92%;
+            max-width: 1250px;
+            margin: 35px auto;
+        }
+
+        .page-title {
+            margin-bottom: 25px;
+        }
+
+        .page-title h1 {
+            font-size: 30px;
+            margin-bottom: 8px;
+        }
+
+        .page-title p {
+            color: #6b7280;
+        }
+
+        .profile {
+            background: white;
+            border-radius: 14px;
+            padding: 25px;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.06);
+        }
+
+        .profile h2 {
+            margin-bottom: 20px;
+        }
+
+        .profile-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        .profile-item {
+            background: #f8fafc;
+            padding: 18px;
+            border-radius: 10px;
+        }
+
+        .profile-item span {
+            display: block;
+            color: #6b7280;
+            font-size: 14px;
+            margin-bottom: 7px;
+        }
+
+        .profile-item strong {
+            font-size: 17px;
+        }
+
+        .section {
+            background: white;
+            border-radius: 14px;
+            padding: 25px;
+            margin-bottom: 25px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.06);
+        }
+
+        .section h2 {
+            margin-bottom: 20px;
+        }
+
+        .table-wrapper {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th {
+            background: #f3f4f6;
+            text-align: left;
+            padding: 13px;
+            font-size: 14px;
+        }
+
+        td {
+            padding: 13px;
+            border-bottom: 1px solid #e5e7eb;
+            font-size: 14px;
+        }
+
+        .metric {
+            font-weight: bold;
+        }
+
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+
+        .metric-card {
+            background: #f8fafc;
+            padding: 22px;
+            border-radius: 12px;
+            border: 1px solid #e5e7eb;
+        }
+
+        .metric-card h3 {
+            margin-bottom: 12px;
+        }
+
+        .metric-card p {
+            margin: 8px 0;
+            color: #4b5563;
+        }
+
+        .insight {
+            background: #eef2ff;
+            border-left: 5px solid #4f46e5;
+            padding: 20px;
+            border-radius: 10px;
+            line-height: 1.6;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 5px 10px;
+            border-radius: 20px;
+            background: #e0e7ff;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .back-btn {
+            display: inline-block;
+            margin-top: 10px;
+            padding: 11px 18px;
+            background: #111827;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+        }
+
+        .disclaimer {
+            color: #6b7280;
+            font-size: 13px;
+            line-height: 1.6;
+            margin-top: 10px;
+        }
+
+        @media (max-width: 800px) {
+
+            .profile-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .cards {
+                grid-template-columns: 1fr;
+            }
+
+            .navbar {
+                padding: 15px 20px;
+            }
+
+            .container {
+                width: 95%;
+            }
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- ================= NAVBAR ================= -->
+
+<div class="navbar">
+
+    <h2>AI Meta Ads</h2>
+
+    <div>
+
+        <a href="{{ url_for('dashboard') }}">
+            Dashboard
+        </a>
+
+        <a href="{{ url_for('logout') }}">
+            Logout
+        </a>
+
+    </div>
+
+</div>
+
+
+<!-- ================= MAIN ================= -->
+
+<div class="container">
+
+
+    <!-- PAGE TITLE -->
+
+    <div class="page-title">
+
+        <h1>Competitor Intelligence</h1>
+
+        <p>
+            Historical comparison of advertisements similar
+            to your uploaded advertisement.
+        </p>
+
+    </div>
+
+
+    <!-- ================= AD PROFILE ================= -->
+
+    <div class="profile">
+
+        <h2>Advertisement Profile</h2>
+
+        <div class="profile-grid">
+
+
+            <div class="profile-item">
+
+                <span>Category</span>
+
+                <strong>
+                    {{ analysis.category }}
+                </strong>
+
+            </div>
+
+
+            <div class="profile-item">
+
+                <span>Product</span>
+
+                <strong>
+                    {{ analysis.product }}
+                </strong>
+
+            </div>
+
+
+            <div class="profile-item">
+
+                <span>Creative Type</span>
+
+                <strong>
+                    {{ analysis.creative_type }}
+                </strong>
+
+            </div>
+
+
+            <div class="profile-item">
+
+                <span>Offer</span>
+
+                <strong>
+                    {{ analysis.offer }}
+                </strong>
+
+            </div>
+
+
+            <div class="profile-item">
+
+                <span>Recommended Audience</span>
+
+                <strong>
+                    {{ analysis.audience }}
+                </strong>
+
+            </div>
+
+
+            <div class="profile-item">
+
+                <span>Ads Analyzed</span>
+
+                <strong>
+                    {{ competitor.total_ads_analyzed }}
+                </strong>
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+
+    <!-- ================= COMPETITOR ADS ================= -->
+
+    <div class="section">
+
+        <h2>Similar Advertisement Comparison</h2>
+
+        {% if competitor.competitors %}
+
+        <div class="table-wrapper">
+
+            <table>
+
+                <thead>
+
+                    <tr>
+
+                        <th>Ad ID</th>
+
+                        <th>Platform</th>
+
+                        <th>Ad Type</th>
+
+                        <th>Age Group</th>
+
+                        <th>Interests</th>
+
+                        <th>Impressions</th>
+
+                        <th>Clicks</th>
+
+                        <th>CTR</th>
+
+                        <th>Purchases</th>
+
+                        <th>Purchase Rate</th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody>
+
+                    {% for ad in competitor.competitors %}
+
+                    <tr>
+
+                        <td>
+                            <span class="badge">
+                                #{{ ad.ad_id }}
+                            </span>
+                        </td>
+
+                        <td>
+                            {{ ad.platform }}
+                        </td>
+
+                        <td>
+                            {{ ad.ad_type }}
+                        </td>
+
+                        <td>
+                            {{ ad.target_age_group }}
+                        </td>
+
+                        <td>
+                            {{ ad.target_interests }}
+                        </td>
+
+                        <td>
+                            {{ ad.impressions }}
+                        </td>
+
+                        <td>
+                            {{ ad.clicks }}
+                        </td>
+
+                        <td class="metric">
+                            {{ ad.ctr }}%
+                        </td>
+
+                        <td>
+                            {{ ad.purchases }}
+                        </td>
+
+                        <td>
+                            {{ ad.purchase_rate }}%
+                        </td>
+
+                    </tr>
+
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+        {% else %}
+
+        <p>
+            No similar historical advertisements found.
+        </p>
+
+        {% endif %}
+
+    </div>
+
+
+    <!-- ================= PLATFORM SUMMARY ================= -->
+
+    <div class="section">
+
+        <h2>Platform Comparison</h2>
+
+        <div class="cards">
+
+            {% for platform in competitor.platform_summary %}
+
+            <div class="metric-card">
+
+                <h3>
+                    {{ platform.platform }}
+                </h3>
+
+                <p>
+                    Impressions:
+                    <strong>
+                        {{ platform.impressions }}
+                    </strong>
+                </p>
+
+                <p>
+                    Clicks:
+                    <strong>
+                        {{ platform.clicks }}
+                    </strong>
+                </p>
+
+                <p>
+                    Purchases:
+                    <strong>
+                        {{ platform.purchases }}
+                    </strong>
+                </p>
+
+                <p>
+                    CTR:
+                    <strong>
+                        {{ platform.ctr }}%
+                    </strong>
+                </p>
+
+            </div>
+
+            {% endfor %}
+
+        </div>
+
+    </div>
+
+
+    <!-- ================= AD TYPE SUMMARY ================= -->
+
+    <div class="section">
+
+        <h2>Advertisement Type Comparison</h2>
+
+        <div class="cards">
+
+            {% for ad_type in competitor.ad_type_summary %}
+
+            <div class="metric-card">
+
+                <h3>
+                    {{ ad_type.ad_type }}
+                </h3>
+
+                <p>
+                    Impressions:
+                    <strong>
+                        {{ ad_type.impressions }}
+                    </strong>
+                </p>
+
+                <p>
+                    Clicks:
+                    <strong>
+                        {{ ad_type.clicks }}
+                    </strong>
+                </p>
+
+                <p>
+                    Purchases:
+                    <strong>
+                        {{ ad_type.purchases }}
+                    </strong>
+                </p>
+
+                <p>
+                    CTR:
+                    <strong>
+                        {{ ad_type.ctr }}%
+                    </strong>
+                </p>
+
+            </div>
+
+            {% endfor %}
+
+        </div>
+
+    </div>
+
+
+    <!-- ================= AI INSIGHT ================= -->
+
+    <div class="section">
+
+        <h2>AI Competitive Insight</h2>
+
+        <div class="insight">
+
+            {{ competitor.insight }}
+
+        </div>
+
+    </div>
+
+
+    <!-- ================= DISCLAIMER ================= -->
+
+    <div class="section">
+
+        <h2>Interpretation</h2>
+
+        <p class="disclaimer">
+
+            This competitor analysis is based on historically
+            similar advertisements available in the project
+            dataset. The displayed metrics represent historical
+            observations and should not be interpreted as
+            guaranteed future campaign performance.
+
+        </p>
+
+    </div>
+
+
+    <a class="back-btn"
+       href="{{ url_for('dashboard') }}">
+
+        ← Back to Dashboard
+
+    </a>
+
+
+</div>
+
+
+</body>
+
+</html>

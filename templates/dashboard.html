@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Dashboard - AI Meta Ads</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+
+</head>
+
+
+<body>
+
+
+<!-- ========================================
+     NAVIGATION
+======================================== -->
+
+<nav class="navbar">
+
+    <div class="logo">
+        🚀 AI Meta Ads
+    </div>
+
+
+    <div class="nav-links">
+
+        <a href="/dashboard">
+            Dashboard
+        </a>
+
+        <a href="/logout">
+            Logout
+        </a>
+
+    </div>
+
+</nav>
+
+
+
+<!-- ========================================
+     DASHBOARD
+======================================== -->
+
+<section class="dashboard">
+
+
+    <p class="section-label">
+        AI ADVERTISEMENT INTELLIGENCE
+    </p>
+
+
+    <h1>
+        Welcome, {{ name }}! 👋
+    </h1>
+
+
+    <p>
+        Your AI-powered campaign intelligence dashboard.
+    </p>
+
+
+
+    <!-- Dashboard Cards -->
+
+    <div class="dashboard-grid">
+
+
+        <!-- Upload Advertisement -->
+
+        <a href="/upload"
+           class="dashboard-card dashboard-link">
+
+            <h2>
+                📤
+            </h2>
+
+            <h3>
+                Upload Advertisement
+            </h3>
+
+            <p>
+                Upload your advertisement
+                for AI analysis.
+            </p>
+
+        </a>
+
+
+
+        <!-- Ad Analysis -->
+
+        <div class="dashboard-card">
+
+            <h2>
+                🔍
+            </h2>
+
+            <h3>
+                Ad Analysis
+            </h3>
+
+            <p>
+                Understand your advertisement
+                using AI.
+            </p>
+
+        </div>
+
+
+
+        <!-- Performance -->
+
+        <div class="dashboard-card">
+
+            <h2>
+                📈
+            </h2>
+
+            <h3>
+                Performance
+            </h3>
+
+            <p>
+                Predict campaign performance
+                using machine learning.
+            </p>
+
+        </div>
+
+
+
+        <!-- Audience -->
+
+        <div class="dashboard-card">
+
+            <h2>
+                🎯
+            </h2>
+
+            <h3>
+                Audience
+            </h3>
+
+            <p>
+                Find the right audience
+                for your advertisement.
+            </p>
+
+        </div>
+
+
+    </div>
+
+
+</section>
+
+
+</body>
+
+</html>

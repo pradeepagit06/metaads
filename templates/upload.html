@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>
+        Upload Advertisement - AI Meta Ads
+    </title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+
+</head>
+
+
+<body>
+
+
+<!-- =========================================
+     NAVBAR
+========================================= -->
+
+<nav class="navbar">
+
+    <div class="logo">
+        🚀 AI Meta Ads
+    </div>
+
+
+    <div class="nav-links">
+
+        <a href="/dashboard">
+            Dashboard
+        </a>
+
+        <a href="/logout">
+            Logout
+        </a>
+
+    </div>
+
+</nav>
+
+
+
+<!-- =========================================
+     UPLOAD SECTION
+========================================= -->
+
+<section class="upload-section">
+
+
+    <div class="upload-box">
+
+
+        <p class="section-label">
+            AI ADVERTISEMENT ANALYSIS
+        </p>
+
+
+        <h1>
+            Upload Your Advertisement
+        </h1>
+
+
+        <p class="upload-description">
+
+            Upload your advertisement image
+            and let our AI system analyze it.
+
+        </p>
+
+
+
+        <!-- =====================================
+             SUCCESS MESSAGE
+        ====================================== -->
+
+        {% if success %}
+
+        <div class="success-message">
+
+            ✅ Advertisement uploaded successfully!
+
+        </div>
+
+        {% endif %}
+
+
+
+        <!-- =====================================
+             UPLOAD FORM
+        ====================================== -->
+
+        <form method="POST"
+              enctype="multipart/form-data">
+
+
+            <div class="file-area">
+
+
+                <div class="upload-icon">
+                    📤
+                </div>
+
+
+                <h3>
+                    Select Advertisement
+                </h3>
+
+
+                <p>
+                    PNG, JPG, JPEG or WEBP
+                </p>
+
+
+                <input
+                    type="file"
+                    name="ad_image"
+                    accept=".png,.jpg,.jpeg,.webp"
+                    required
+                >
+
+
+            </div>
+
+
+
+            <button
+                type="submit"
+                class="upload-btn">
+
+                🚀 Upload Advertisement
+
+            </button>
+
+
+        </form>
+
+
+
+        <!-- =====================================
+             UPLOADED IMAGE
+        ====================================== -->
+
+        {% if filename %}
+
+        <div class="uploaded-result">
+
+
+            <h2>
+                Uploaded Advertisement
+            </h2>
+
+
+            <img
+                src="{{ url_for(
+                    'static',
+                    filename='uploads/' + filename
+                ) }}"
+                alt="Uploaded Advertisement"
+            >
+
+
+            <p>
+                File: {{ filename }}
+            </p>
+
+
+
+            <!-- =================================
+                 ANALYZE BUTTON
+            ================================== -->
+
+            <a
+                href="{{ url_for(
+                    'analyze',
+                    filename=filename
+                ) }}"
+                class="analyze-btn">
+
+                🔍 Analyze Advertisement
+
+            </a>
+
+
+        </div>
+
+        {% endif %}
+
+
+        <a href="{{ url_for('chat_page', filename=filename) }}"
+   class="back-btn">
+    🤖 Ask Campaign AI Assistant
+</a>
+
+        <!-- =====================================
+             BACK TO DASHBOARD
+        ====================================== -->
+
+        <a
+            href="/dashboard"
+            class="back-link">
+
+            ← Back to Dashboard
+
+        </a>
+
+
+    </div>
+
+
+</section>
+
+
+</body>
+
+</html>

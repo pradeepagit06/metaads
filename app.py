@@ -26,7 +26,7 @@ from flask import send_from_directory
 # FLASK APP
 # ==================================================
 
-app = Flask(__name__, instance_path="/tmp")
+app = Flask(__name__)
 
 BASE_DIR = os.path.abspath(os.path.dirname(__file__))
 
@@ -41,12 +41,19 @@ app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///meta_ads.db"
 
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 
-app.config["UPLOAD_FOLDER"] = os.path.join(
-    BASE_DIR,
-    "static",
-    "uploads"
-)
-
+if os.name == "nt":
+    # Windows local development
+    app.config["UPLOAD_FOLDER"] = os.path.join(
+        BASE_DIR,
+        "static",
+        "uploads"
+    )
+else:
+    # Vercel / Linux
+    app.config["UPLOAD_FOLDER"] = os.path.join(
+        "/tmp",
+        "uploads"
+    )
 
 # ==================================================
 # DATASET CONFIGURATION

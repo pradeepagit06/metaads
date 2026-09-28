@@ -1,0 +1,38 @@
+<style>
+  .nav-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin: 30px 0;
+  }
+  .nav-buttons a {
+    padding: 10px 16px;
+    background: #4f46e5;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 8px;
+    font-size: 14px;
+  }
+  .nav-buttons a:hover {
+    background: #3730a3;
+  }
+</style>
+
+{% set fn = request.view_args.filename %}
+
+<div class="nav-buttons">
+  <a href="{{ url_for('dashboard') }}">🏠 Dashboard</a>
+  <a href="{{ url_for('upload') }}">📤 Upload New Ad</a>
+  <a href="{{ url_for('similar_ads', filename=fn) }}">🔎 Similar Ads</a>
+  <a href="{{ url_for('performance_prediction', filename=fn) }}">📈 Performance Prediction</a>
+  <a href="{{ url_for('audience_recommendation', filename=fn) }}">🎯 Audience</a>
+  <a href="{{ url_for('competitor_intelligence', filename=fn) }}">🏆 Competitors</a>
+  <a href="{{ url_for('cost_estimator', filename=fn) }}">💰 Cost Estimator</a>
+  <a href="{{ url_for('ad_fatigue', filename=fn) }}">😴 Ad Fatigue</a>
+  <a href="{{ url_for('best_release_time', filename=fn) }}">🕒 Best Release Time</a>
+  <a href="{{ url_for('trend_regional', filename=fn) }}">🌍 Regional Trends</a>
+  <a href="{{ url_for('final_recommendation', filename=fn) }}">✅ Final Recommendation</a>
+  <a href="{{ url_for('download_report', filename=fn) }}">📄 Download Report</a>
+  <a href="{{ url_for('chat_page', filename=fn) }}">💬 AI Chat</a>
+  <a href="{{ url_for('logout') }}">🚪 Logout</a>
+</div>

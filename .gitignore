@@ -5,3 +5,5 @@ __pycache__/
 instance/*.db
 static/uploads/*
 static/reports/*
+.venv/
+instance/

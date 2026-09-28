@@ -26,7 +26,7 @@ from flask import send_from_directory
 # FLASK APP
 # ==================================================
 
-app = Flask(__name__)
+app = Flask(__name__, instance_path="/tmp")
 
 BASE_DIR = os.path.abspath(os.path.dirname(__file__))
 

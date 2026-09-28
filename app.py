@@ -35,7 +35,7 @@ BASE_DIR = os.path.abspath(os.path.dirname(__file__))
 # FLASK CONFIGURATION
 # ==================================================
 
-app.config["SECRET_KEY"] = "ai-meta-ads-secret-key"
+app.config["SECRET_KEY"] = os.environ.get("SECRET_KEY", "dev-only-key")
 
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///meta_ads.db"
 
